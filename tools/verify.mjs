@@ -31,7 +31,6 @@ try {
   await page.goBack();
   await sleep(2000);
   check((await page.evaluate(rows)).includes('Scope the launch'), 'Back: the first project returns');
-  check(await page.evaluate(() => document.getElementById('server-source').textContent.length > 500), 'route handlers printed');
   check(errors.length === 0, `no console errors ${errors.join(' / ')}`);
 } finally {
   await browser.close();

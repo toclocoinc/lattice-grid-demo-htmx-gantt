@@ -17,12 +17,10 @@
 <body>
 <header>
   <h1>htmx Gantt chart over a server task table</h1>
-  <p class="lede">The server renders a plain task table inside a <code>data-lattice-gantt</code> element. Lattice turns it into a task grid and a
-  timeline, re-raises every drag as a <code>lattice:gantt-change</code> event for <code>hx-post</code>, and puts the zoom back when you press Back.
-  There is no mount code on this page: only markup, htmx and the Lattice htmx module.</p>
-  <p class="standin" role="note"><strong>A stand-in server is answering in your browser.</strong> GitHub Pages is static, so a small script
-  answers htmx's requests to <code>/htmx-demo/</code> with HTML built from demo data in memory, after a short delay so each swap is visible.
-  Nothing leaves the page. Its route handlers are printed below: they are what your own server would do.</p>
+  <p class="lede">The server renders a plain task table; Lattice turns it into a Gantt chart with no mount code, and htmx handles the swaps, the
+  out-of-band update and the save. A stand-in server answers htmx's requests in your browser, so nothing leaves the page.</p>
+  <p class="links"><a href="https://github.com/toclocoinc/lattice-grid-demo-htmx-gantt">Code on GitHub</a>
+  <a href="https://www.latticegrid.dev/htmx/gantt/">Lattice Grid with htmx</a></p>
 </header>
 <main class="showcase">
   <div class="demo">
@@ -61,27 +59,6 @@
     <ul id="request-log" class="log" aria-live="polite"><li>none yet</li></ul>
   </aside>
 </main>
-<section class="code">
-  <div><h2>Page markup</h2><pre><code>&lt;div class=&quot;view&quot;&gt;&lt;div class=&quot;filters&quot;&gt;&lt;button hx-get=&quot;/htmx-demo/gantt/plan?project=launch&quot; hx-target=&quot;#gantt-view&quot;
-      hx-push-url=&quot;?project=launch&quot; aria-pressed=&quot;true&quot;&gt;Product launch&lt;/button&gt;
-  &lt;button hx-get=&quot;/htmx-demo/gantt/plan?project=migration&quot; hx-target=&quot;#gantt-view&quot;
-      hx-push-url=&quot;?project=migration&quot; aria-pressed=&quot;false&quot;&gt;Data migration&lt;/button&gt;&lt;button class=&quot;action&quot; hx-post=&quot;/htmx-demo/gantt/slip&quot; hx-vals=&#x27;{&quot;project&quot;: &quot;launch&quot;}&#x27; hx-swap=&quot;none&quot;&gt;Server slips one task&lt;/button&gt;&lt;/div&gt;
-&lt;div data-lattice-gantt hx-post=&quot;/htmx-demo/gantt/save&quot; hx-trigger=&quot;lattice:gantt-change&quot;
-  hx-vals=&#x27;js:{id: event.detail.id, kind: event.detail.kind, changes: JSON.stringify(event.detail.changes)}&#x27;
-  hx-target=&quot;#save-status&quot; hx-swap=&quot;innerHTML&quot; style=&quot;height:460px&quot;&gt;
-  &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th data-field=&quot;id&quot;&gt;ID&lt;/th&gt;&lt;th data-field=&quot;name&quot;&gt;Task&lt;/th&gt;&lt;th data-field=&quot;start&quot;&gt;Start&lt;/th&gt;
-    &lt;th data-field=&quot;end&quot;&gt;End&lt;/th&gt;&lt;th data-field=&quot;percentComplete&quot;&gt;Done %&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
-  &lt;tbody&gt;
-  &lt;tr &gt;&lt;td&gt;L1&lt;/td&gt;&lt;td&gt;Scope the launch&lt;/td&gt;&lt;td&gt;2026-10-05&lt;/td&gt;&lt;td&gt;2026-10-08&lt;/td&gt;&lt;td&gt;100&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr &gt;&lt;td&gt;L2&lt;/td&gt;&lt;td&gt;Build the landing page&lt;/td&gt;&lt;td&gt;2026-10-09&lt;/td&gt;&lt;td&gt;2026-10-16&lt;/td&gt;&lt;td&gt;60&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr &gt;&lt;td&gt;L3&lt;/td&gt;&lt;td&gt;Write the announcement&lt;/td&gt;&lt;td&gt;2026-10-12&lt;/td&gt;&lt;td&gt;2026-10-15&lt;/td&gt;&lt;td&gt;30&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr &gt;&lt;td&gt;L4&lt;/td&gt;&lt;td&gt;Review with legal&lt;/td&gt;&lt;td&gt;2026-10-19&lt;/td&gt;&lt;td&gt;2026-10-21&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr &gt;&lt;td&gt;L5&lt;/td&gt;&lt;td&gt;Go live&lt;/td&gt;&lt;td&gt;2026-10-22&lt;/td&gt;&lt;td&gt;2026-10-23&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;
-  &lt;/tbody&gt;&lt;/table&gt;&lt;i id=&quot;task-L1&quot; data-lattice-row=&quot;L1&quot;&gt;&lt;/i&gt;&lt;i id=&quot;task-L2&quot; data-lattice-row=&quot;L2&quot;&gt;&lt;/i&gt;&lt;i id=&quot;task-L3&quot; data-lattice-row=&quot;L3&quot;&gt;&lt;/i&gt;&lt;i id=&quot;task-L4&quot; data-lattice-row=&quot;L4&quot;&gt;&lt;/i&gt;&lt;i id=&quot;task-L5&quot; data-lattice-row=&quot;L5&quot;&gt;&lt;/i&gt;
-&lt;/div&gt;
-&lt;script type=&quot;application/json&quot; data-lattice-config&gt;{&quot;projectStart&quot;:&quot;2026-10-05&quot;,&quot;split&quot;:{&quot;editable&quot;:true,&quot;dateAxis&quot;:true,&quot;zoom&quot;:&quot;week&quot;,&quot;zoomControl&quot;:true,&quot;gridWidth&quot;:400}}&lt;/script&gt;&lt;/div&gt;</code></pre></div>
-  <div><h2>Server template (route handlers)</h2><pre><code id="server-source">See src/server.js</code></pre></div>
-</section>
 <footer>Built with <a href="https://www.latticegrid.dev/htmx/gantt/">Lattice Grid</a>. No keys, no analytics.</footer>
 <script type="module" src="main.js"></script>
 </body>

@@ -37,7 +37,3 @@ document.body.addEventListener('htmx:afterRequest', (e) => {
   while (log.children.length > 6) log.lastElementChild.remove();
 });
 
-// Print the route handlers beside the demo, straight from the file that runs them.
-const raw = await (await fetch('src/server.js')).text();
-const from = raw.indexOf('// SERVER TEMPLATE START') + 25;
-document.getElementById('server-source').textContent = raw.slice(from, raw.indexOf('// SERVER TEMPLATE END')).trim();

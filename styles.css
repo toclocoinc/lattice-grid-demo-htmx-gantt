@@ -4,6 +4,8 @@ h1 { font-size: 1.25rem; margin: 0 0 6px; }
 h2 { font-size: 1rem; margin: 0 0 8px; }
 h3 { font-size: .875rem; margin: 16px 0 6px; }
 .lede { margin: 0 0 10px; color: #5b6570; max-width: 100ch; }
+.links { display: flex; gap: 18px; margin: 0 0 6px; font-weight: 600; }
+.links a { color: #1f6feb; }
 .standin { margin: 0 0 6px; max-width: 100ch; padding: 8px 12px; border: 1px solid #dfe3e6; border-left: 3px solid #2d6bff; border-radius: 6px; font-size: 13px; }
 code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .92em; }
 .showcase { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; padding: 16px 18px; align-items: start; }
