@@ -71,7 +71,7 @@ const config = (project) => ({
   projectStart: plans[project][0].start,
   dependencies: links[project],
   split: {
-    editable: true, dateAxis: true, zoom: 'quarter', zoomControl: true, gridWidth: 540,
+    editable: true, dateAxis: true, height: null, zoom: 'month', zoomControl: true, gridWidth: 540,
     columns: ['wbs', 'name', 'start', 'end', 'progress'], arrows: true, criticalPath: true,
   },
 });
@@ -89,7 +89,7 @@ export function ganttFragment(project = 'platform') {
   return `<div class="view"><div class="filters">${pick}${action}</div>
 <div data-lattice-gantt hx-post="/htmx-demo/gantt/save" hx-trigger="lattice:gantt-change"
   hx-vals='js:{id: event.detail.id, kind: event.detail.kind, changes: JSON.stringify(event.detail.changes)}'
-  hx-target="#save-status" hx-swap="innerHTML" style="height:600px">
+  hx-target="#save-status" hx-swap="innerHTML">
   <table><thead><tr><th data-field="id">ID</th><th data-field="name">Task</th><th data-field="parent">Phase</th>
     <th data-field="start">Start</th><th data-field="end">End</th><th data-field="percentComplete">Done %</th><th data-field="milestone">Milestone</th></tr></thead>
   <tbody>
