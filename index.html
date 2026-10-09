@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>htmx Gantt Chart over a Server Task Table | Lattice Grid</title>
+<meta name="description" content="An htmx Gantt chart built from a server-rendered task table: swap projects with hx-get, move one task out of band, post bar drags with hx-post, and keep the zoom on Back.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css">
+<!-- The grid comes from the published package. To use a newer release, change the version in these lines. -->
+<script type="importmap">
+{ "imports": {
+  "@toclocoinc/lattice-grid/modules/htmx": "https://cdn.jsdelivr.net/npm/@toclocoinc/lattice-grid@1.93.0/modules/htmx.esm.min.js" } }
+</script>
+</head>
+<body>
+<header>
+  <h1>htmx Gantt chart over a server task table</h1>
+  <p class="lede">The server renders a plain task table inside a <code>data-lattice-gantt</code> element. Lattice turns it into a task grid and a
+  timeline, re-raises every drag as a <code>lattice:gantt-change</code> event for <code>hx-post</code>, and puts the zoom back when you press Back.
+  There is no mount code on this page: only markup, htmx and the Lattice htmx module.</p>
+  <p class="standin" role="note"><strong>A stand-in server is answering in your browser.</strong> GitHub Pages is static, so a small script
+  answers htmx's requests to <code>/htmx-demo/</code> with HTML built from demo data in memory, after a short delay so each swap is visible.
+  Nothing leaves the page. Its route handlers are printed below: they are what your own server would do.</p>
+</header>
+<main class="showcase">
+  <div class="demo">
+    <div id="htmx-history" hx-history-elt>
+      <div id="gantt-view"><div class="view"><div class="filters"><button hx-get="/htmx-demo/gantt/plan?project=launch" hx-target="#gantt-view"
+      hx-push-url="?project=launch" aria-pressed="true">Product launch</button>
+  <button hx-get="/htmx-demo/gantt/plan?project=migration" hx-target="#gantt-view"
+      hx-push-url="?project=migration" aria-pressed="false">Data migration</button><button class="action" hx-post="/htmx-demo/gantt/slip" hx-vals='{"project": "launch"}' hx-swap="none">Server slips one task</button></div>
+<div data-lattice-gantt hx-post="/htmx-demo/gantt/save" hx-trigger="lattice:gantt-change"
+  hx-vals='js:{id: event.detail.id, kind: event.detail.kind, changes: JSON.stringify(event.detail.changes)}'
+  hx-target="#save-status" hx-swap="innerHTML" style="height:460px">
+  <table><thead><tr><th data-field="id">ID</th><th data-field="name">Task</th><th data-field="start">Start</th>
+    <th data-field="end">End</th><th data-field="percentComplete">Done %</th></tr></thead>
+  <tbody>
+  <tr ><td>L1</td><td>Scope the launch</td><td>2026-10-05</td><td>2026-10-08</td><td>100</td></tr>
+  <tr ><td>L2</td><td>Build the landing page</td><td>2026-10-09</td><td>2026-10-16</td><td>60</td></tr>
+  <tr ><td>L3</td><td>Write the announcement</td><td>2026-10-12</td><td>2026-10-15</td><td>30</td></tr>
+  <tr ><td>L4</td><td>Review with legal</td><td>2026-10-19</td><td>2026-10-21</td><td>0</td></tr>
+  <tr ><td>L5</td><td>Go live</td><td>2026-10-22</td><td>2026-10-23</td><td>0</td></tr>
+  </tbody></table><i id="task-L1" data-lattice-row="L1"></i><i id="task-L2" data-lattice-row="L2"></i><i id="task-L3" data-lattice-row="L3"></i><i id="task-L4" data-lattice-row="L4"></i><i id="task-L5" data-lattice-row="L5"></i>
+</div>
+<script type="application/json" data-lattice-config>{"projectStart":"2026-10-05","split":{"editable":true,"dateAxis":true,"zoom":"week","zoomControl":true,"gridWidth":400}}</script></div></div>
+      <p id="save-status" class="status" aria-live="polite"></p>
+    </div>
+  </div>
+  <aside>
+    <h2>Try the five steps</h2>
+    <ol class="steps">
+      <li><strong>Built on load.</strong> The task table was server-rendered; the Gantt replaced it with a task grid and a timeline.</li>
+      <li><strong>Swap.</strong> Pick the other project. hx-get fetches its tasks, the old Gantt is torn down and a new one is built.</li>
+      <li><strong>Out of band.</strong> Press "Server slips one task". One task comes back out of band and its bar moves a day.</li>
+      <li><strong>Edit.</strong> Drag a bar to new dates, or edit a cell. lattice:gantt-change is posted with hx-post and the server confirms below the chart.</li>
+      <li><strong>Back.</strong> Click Month in the timeline header, switch project, then press Back. The zoom returns to Month.</li>
+    </ol>
+    <h3>Requests the stand-in server answered</h3>
+    <ul id="request-log" class="log" aria-live="polite"><li>none yet</li></ul>
+  </aside>
+</main>
+<section class="code">
+  <div><h2>Page markup</h2><pre><code>&lt;div class=&quot;view&quot;&gt;&lt;div class=&quot;filters&quot;&gt;&lt;button hx-get=&quot;/htmx-demo/gantt/plan?project=launch&quot; hx-target=&quot;#gantt-view&quot;
+      hx-push-url=&quot;?project=launch&quot; aria-pressed=&quot;true&quot;&gt;Product launch&lt;/button&gt;
+  &lt;button hx-get=&quot;/htmx-demo/gantt/plan?project=migration&quot; hx-target=&quot;#gantt-view&quot;
+      hx-push-url=&quot;?project=migration&quot; aria-pressed=&quot;false&quot;&gt;Data migration&lt;/button&gt;&lt;button class=&quot;action&quot; hx-post=&quot;/htmx-demo/gantt/slip&quot; hx-vals=&#x27;{&quot;project&quot;: &quot;launch&quot;}&#x27; hx-swap=&quot;none&quot;&gt;Server slips one task&lt;/button&gt;&lt;/div&gt;
+&lt;div data-lattice-gantt hx-post=&quot;/htmx-demo/gantt/save&quot; hx-trigger=&quot;lattice:gantt-change&quot;
+  hx-vals=&#x27;js:{id: event.detail.id, kind: event.detail.kind, changes: JSON.stringify(event.detail.changes)}&#x27;
+  hx-target=&quot;#save-status&quot; hx-swap=&quot;innerHTML&quot; style=&quot;height:460px&quot;&gt;
+  &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th data-field=&quot;id&quot;&gt;ID&lt;/th&gt;&lt;th data-field=&quot;name&quot;&gt;Task&lt;/th&gt;&lt;th data-field=&quot;start&quot;&gt;Start&lt;/th&gt;
+    &lt;th data-field=&quot;end&quot;&gt;End&lt;/th&gt;&lt;th data-field=&quot;percentComplete&quot;&gt;Done %&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+  &lt;tr &gt;&lt;td&gt;L1&lt;/td&gt;&lt;td&gt;Scope the launch&lt;/td&gt;&lt;td&gt;2026-10-05&lt;/td&gt;&lt;td&gt;2026-10-08&lt;/td&gt;&lt;td&gt;100&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr &gt;&lt;td&gt;L2&lt;/td&gt;&lt;td&gt;Build the landing page&lt;/td&gt;&lt;td&gt;2026-10-09&lt;/td&gt;&lt;td&gt;2026-10-16&lt;/td&gt;&lt;td&gt;60&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr &gt;&lt;td&gt;L3&lt;/td&gt;&lt;td&gt;Write the announcement&lt;/td&gt;&lt;td&gt;2026-10-12&lt;/td&gt;&lt;td&gt;2026-10-15&lt;/td&gt;&lt;td&gt;30&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr &gt;&lt;td&gt;L4&lt;/td&gt;&lt;td&gt;Review with legal&lt;/td&gt;&lt;td&gt;2026-10-19&lt;/td&gt;&lt;td&gt;2026-10-21&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr &gt;&lt;td&gt;L5&lt;/td&gt;&lt;td&gt;Go live&lt;/td&gt;&lt;td&gt;2026-10-22&lt;/td&gt;&lt;td&gt;2026-10-23&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;&lt;/table&gt;&lt;i id=&quot;task-L1&quot; data-lattice-row=&quot;L1&quot;&gt;&lt;/i&gt;&lt;i id=&quot;task-L2&quot; data-lattice-row=&quot;L2&quot;&gt;&lt;/i&gt;&lt;i id=&quot;task-L3&quot; data-lattice-row=&quot;L3&quot;&gt;&lt;/i&gt;&lt;i id=&quot;task-L4&quot; data-lattice-row=&quot;L4&quot;&gt;&lt;/i&gt;&lt;i id=&quot;task-L5&quot; data-lattice-row=&quot;L5&quot;&gt;&lt;/i&gt;
+&lt;/div&gt;
+&lt;script type=&quot;application/json&quot; data-lattice-config&gt;{&quot;projectStart&quot;:&quot;2026-10-05&quot;,&quot;split&quot;:{&quot;editable&quot;:true,&quot;dateAxis&quot;:true,&quot;zoom&quot;:&quot;week&quot;,&quot;zoomControl&quot;:true,&quot;gridWidth&quot;:400}}&lt;/script&gt;&lt;/div&gt;</code></pre></div>
+  <div><h2>Server template (route handlers)</h2><pre><code id="server-source">See src/server.js</code></pre></div>
+</section>
+<footer>Built with <a href="https://www.latticegrid.dev/htmx/gantt/">Lattice Grid</a>. No keys, no analytics.</footer>
+<script type="module" src="main.js"></script>
+</body>
+</html>
