@@ -9,7 +9,7 @@ The plan is a two-year programme (and a second, data-centre migration plan) with
 1. **Built on load.** The server-rendered task table becomes the Gantt. With JavaScript off it is still a readable table.
 2. **Swap.** Picking the other project runs an `hx-get`; the old Gantt is torn down and a new one is built from the new table.
 3. **Out of band.** "Server slips one task" returns one `<tr data-lattice-row>` with `hx-swap-oob`, and only that task's bar moves.
-4. **Edit.** Dragging a bar raises a bubbling `lattice:gantt-change` event; `hx-trigger="lattice:gantt-change"` posts it with `hx-post`, and the server's reply appears under the chart.
+4. **Edit.** Dragging a bar raises one bubbling `lattice:gantt-commit` event carrying every task the move rescheduled; `hx-trigger="lattice:gantt-commit"` posts the whole edit with a single `hx-post`, and the server's reply appears under the chart.
 5. **Back.** The zoom, scroll and collapsed rows are saved with htmx's history snapshot and come back when you press Back.
 
 ## The stand-in server
