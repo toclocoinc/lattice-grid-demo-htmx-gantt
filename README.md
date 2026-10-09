@@ -4,7 +4,7 @@
 
 The server renders a plain `<table>` of tasks inside a `data-lattice-gantt` element. [Lattice Grid](https://www.latticegrid.dev/htmx/gantt/) turns it into a split view, a task grid on the left and a timeline on the right, with no mount code on the page: only markup, [htmx](https://htmx.org/) and the Lattice htmx module.
 
-The page shows five things:
+The plan is a two-year programme (and a second, data-centre migration plan) with phases, milestones, finish-to-start links, the critical path and progress. The page shows five things:
 
 1. **Built on load.** The server-rendered task table becomes the Gantt. With JavaScript off it is still a readable table.
 2. **Swap.** Picking the other project runs an `hx-get`; the old Gantt is torn down and a new one is built from the new table.

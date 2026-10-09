@@ -3,63 +3,105 @@
  * The page prints the part between the SERVER TEMPLATE markers beside the demo.
  */
 const plans = {
-  launch: [
-    { id: 'L1', name: 'Scope the launch', start: '2026-10-05', end: '2026-10-09', percentComplete: 100 },
-    { id: 'L2', name: 'Agree pricing and packaging', start: '2026-10-12', end: '2026-10-23', percentComplete: 80 },
-    { id: 'L3', name: 'Build the landing page', start: '2026-10-19', end: '2026-11-06', percentComplete: 45 },
-    { id: 'L4', name: 'Write the announcement', start: '2026-11-02', end: '2026-11-13', percentComplete: 20 },
-    { id: 'L5', name: 'Record the product video', start: '2026-11-09', end: '2026-11-27', percentComplete: 0 },
-    { id: 'L6', name: 'Brief partners and press', start: '2026-11-23', end: '2026-12-04', percentComplete: 0 },
-    { id: 'L7', name: 'Review with legal', start: '2026-11-30', end: '2026-12-11', percentComplete: 0 },
-    { id: 'L8', name: 'Load-test the signup flow', start: '2026-12-07', end: '2026-12-18', percentComplete: 0 },
-    { id: 'L9', name: 'Train the support team', start: '2026-12-14', end: '2026-12-23', percentComplete: 0 },
-    { id: 'L10', name: 'Go live', start: '2027-01-05', end: '2027-01-06', percentComplete: 0 },
+  platform: [
+    { id: 'P1', name: 'Discovery', parent: '', start: '2026-04-06', end: '2026-06-26', percentComplete: 0, milestone: false },
+    { id: 'P1.1', name: 'Stakeholder interviews', parent: 'P1', start: '2026-04-06', end: '2026-04-24', percentComplete: 100, milestone: false },
+    { id: 'P1.2', name: 'Current system audit', parent: 'P1', start: '2026-04-20', end: '2026-05-22', percentComplete: 100, milestone: false },
+    { id: 'P1.3', name: 'Requirements and roadmap', parent: 'P1', start: '2026-05-25', end: '2026-06-19', percentComplete: 100, milestone: false },
+    { id: 'M1', name: 'Business case approved', parent: 'P1', start: '2026-06-26', end: '2026-06-26', percentComplete: 100, milestone: true },
+    { id: 'P2', name: 'Architecture', parent: '', start: '2026-06-29', end: '2026-10-30', percentComplete: 0, milestone: false },
+    { id: 'P2.1', name: 'Target architecture', parent: 'P2', start: '2026-06-29', end: '2026-08-07', percentComplete: 100, milestone: false },
+    { id: 'P2.2', name: 'Data model and APIs', parent: 'P2', start: '2026-08-03', end: '2026-09-25', percentComplete: 90, milestone: false },
+    { id: 'P2.3', name: 'Security review', parent: 'P2', start: '2026-09-21', end: '2026-10-23', percentComplete: 40, milestone: false },
+    { id: 'M2', name: 'Architecture sign-off', parent: 'P2', start: '2026-10-30', end: '2026-10-30', percentComplete: 0, milestone: true },
+    { id: 'P3', name: 'Build', parent: '', start: '2026-11-02', end: '2027-09-24', percentComplete: 0, milestone: false },
+    { id: 'P3.1', name: 'Core services', parent: 'P3', start: '2026-11-02', end: '2027-03-26', percentComplete: 5, milestone: false },
+    { id: 'P3.2', name: 'Customer portal', parent: 'P3', start: '2027-01-11', end: '2027-06-25', percentComplete: 0, milestone: false },
+    { id: 'P3.3', name: 'Reporting and analytics', parent: 'P3', start: '2027-03-29', end: '2027-07-30', percentComplete: 0, milestone: false },
+    { id: 'P3.4', name: 'Integrations', parent: 'P3', start: '2027-05-03', end: '2027-09-10', percentComplete: 0, milestone: false },
+    { id: 'M3', name: 'Feature complete', parent: 'P3', start: '2027-09-24', end: '2027-09-24', percentComplete: 0, milestone: true },
+    { id: 'P4', name: 'Test and pilot', parent: '', start: '2027-09-27', end: '2028-01-28', percentComplete: 0, milestone: false },
+    { id: 'P4.1', name: 'System and load testing', parent: 'P4', start: '2027-09-27', end: '2027-11-19', percentComplete: 0, milestone: false },
+    { id: 'P4.2', name: 'Pilot with two customers', parent: 'P4', start: '2027-11-22', end: '2028-01-21', percentComplete: 0, milestone: false },
+    { id: 'M4', name: 'Go / no-go', parent: 'P4', start: '2028-01-28', end: '2028-01-28', percentComplete: 0, milestone: true },
+    { id: 'P5', name: 'Rollout', parent: '', start: '2028-01-31', end: '2028-03-31', percentComplete: 0, milestone: false },
+    { id: 'P5.1', name: 'Migrate customers in waves', parent: 'P5', start: '2028-01-31', end: '2028-03-17', percentComplete: 0, milestone: false },
+    { id: 'P5.2', name: 'Retire the old platform', parent: 'P5', start: '2028-03-06', end: '2028-03-31', percentComplete: 0, milestone: false },
+    { id: 'M5', name: 'Programme complete', parent: 'P5', start: '2028-03-31', end: '2028-03-31', percentComplete: 0, milestone: true },
   ],
   migration: [
-    { id: 'M1', name: 'Audit the old system', start: '2026-10-05', end: '2026-10-16', percentComplete: 100 },
-    { id: 'M2', name: 'Map the data', start: '2026-10-19', end: '2026-11-06', percentComplete: 40 },
-    { id: 'M3', name: 'Build the import scripts', start: '2026-11-02', end: '2026-11-27', percentComplete: 10 },
-    { id: 'M4', name: 'Dry-run the import', start: '2026-11-30', end: '2026-12-11', percentComplete: 0 },
-    { id: 'M5', name: 'Fix what the dry run finds', start: '2026-12-07', end: '2026-12-18', percentComplete: 0 },
-    { id: 'M6', name: 'Freeze the old system', start: '2027-01-04', end: '2027-01-06', percentComplete: 0 },
-    { id: 'M7', name: 'Cut over', start: '2027-01-07', end: '2027-01-08', percentComplete: 0 },
-    { id: 'M8', name: 'Decommission the old system', start: '2027-01-11', end: '2027-01-29', percentComplete: 0 },
+    { id: 'D1', name: 'Assessment', parent: '', start: '2026-05-04', end: '2026-07-31', percentComplete: 0, milestone: false },
+    { id: 'D1.1', name: 'Inventory servers and apps', parent: 'D1', start: '2026-05-04', end: '2026-06-12', percentComplete: 100, milestone: false },
+    { id: 'D1.2', name: 'Dependency mapping', parent: 'D1', start: '2026-06-08', end: '2026-07-24', percentComplete: 100, milestone: false },
+    { id: 'MD1', name: 'Migration plan approved', parent: 'D1', start: '2026-07-31', end: '2026-07-31', percentComplete: 100, milestone: true },
+    { id: 'D2', name: 'Landing zone', parent: '', start: '2026-08-03', end: '2026-11-27', percentComplete: 0, milestone: false },
+    { id: 'D2.1', name: 'Network and identity', parent: 'D2', start: '2026-08-03', end: '2026-09-25', percentComplete: 100, milestone: false },
+    { id: 'D2.2', name: 'Security baseline', parent: 'D2', start: '2026-09-14', end: '2026-11-06', percentComplete: 35, milestone: false },
+    { id: 'D2.3', name: 'Monitoring and backup', parent: 'D2', start: '2026-10-19', end: '2026-11-27', percentComplete: 0, milestone: false },
+    { id: 'MD2', name: 'Landing zone ready', parent: 'D2', start: '2026-11-27', end: '2026-11-27', percentComplete: 0, milestone: true },
+    { id: 'D3', name: 'Migration waves', parent: '', start: '2026-11-30', end: '2027-08-27', percentComplete: 0, milestone: false },
+    { id: 'D3.1', name: 'Wave 1: internal tools', parent: 'D3', start: '2026-11-30', end: '2027-01-29', percentComplete: 0, milestone: false },
+    { id: 'D3.2', name: 'Wave 2: data warehouse', parent: 'D3', start: '2027-02-01', end: '2027-04-30', percentComplete: 0, milestone: false },
+    { id: 'D3.3', name: 'Wave 3: customer systems', parent: 'D3', start: '2027-05-03', end: '2027-08-20', percentComplete: 0, milestone: false },
+    { id: 'MD3', name: 'All workloads moved', parent: 'D3', start: '2027-08-27', end: '2027-08-27', percentComplete: 0, milestone: true },
+    { id: 'D4', name: 'Close-down', parent: '', start: '2027-08-30', end: '2027-12-17', percentComplete: 0, milestone: false },
+    { id: 'D4.1', name: 'Decommission hardware', parent: 'D4', start: '2027-08-30', end: '2027-11-12', percentComplete: 0, milestone: false },
+    { id: 'D4.2', name: 'Exit the data centre lease', parent: 'D4', start: '2027-11-15', end: '2027-12-10', percentComplete: 0, milestone: false },
+    { id: 'MD4', name: 'Data centre closed', parent: 'D4', start: '2027-12-17', end: '2027-12-17', percentComplete: 0, milestone: true },
   ],
 };
 
+// Finish-to-start links between tasks, sent with each plan.
+const links = {
+  platform: [{ from: 'P1.1', to: 'P1.3' }, { from: 'P1.2', to: 'P1.3' }, { from: 'P1.3', to: 'M1' }, { from: 'M1', to: 'P2.1' }, { from: 'P2.1', to: 'P2.2' }, { from: 'P2.2', to: 'P2.3' }, { from: 'P2.3', to: 'M2' }, { from: 'M2', to: 'P3.1' }, { from: 'P3.1', to: 'P3.3' }, { from: 'P3.2', to: 'M3' }, { from: 'P3.3', to: 'M3' }, { from: 'P3.4', to: 'M3' }, { from: 'M3', to: 'P4.1' }, { from: 'P4.1', to: 'P4.2' }, { from: 'P4.2', to: 'M4' }, { from: 'M4', to: 'P5.1' }, { from: 'P5.1', to: 'M5' }, { from: 'P5.2', to: 'M5' }],
+  migration: [{ from: 'D1.1', to: 'D1.2' }, { from: 'D1.2', to: 'MD1' }, { from: 'MD1', to: 'D2.1' }, { from: 'D2.1', to: 'D2.2' }, { from: 'D2.2', to: 'D2.3' }, { from: 'D2.3', to: 'MD2' }, { from: 'MD2', to: 'D3.1' }, { from: 'D3.1', to: 'D3.2' }, { from: 'D3.2', to: 'D3.3' }, { from: 'D3.3', to: 'MD3' }, { from: 'MD3', to: 'D4.1' }, { from: 'D4.1', to: 'D4.2' }, { from: 'D4.2', to: 'MD4' }],
+};
+
 // SERVER TEMPLATE START
+// Element ids for the out-of-band anchors: htmx targets them by #id, so no dots.
+const anchorId = (id) => `task-${String(id).replace(/\./g, '-')}`;
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
-const names = { launch: 'Product launch', migration: 'Data migration' };
+const names = { platform: 'Platform rebuild', migration: 'Data centre migration' };
 
 const taskRow = (t, attrs = '') =>
-  `<tr ${attrs}><td>${t.id}</td><td>${esc(t.name)}</td><td>${t.start}</td><td>${t.end}</td><td>${t.percentComplete}</td></tr>`;
+  `<tr ${attrs}><td>${t.id}</td><td>${esc(t.name)}</td><td>${t.parent}</td><td>${t.start}</td><td>${t.end}</td><td>${t.percentComplete}</td><td>${t.milestone}</td></tr>`;
+
+/** The Gantt's options: the plan's links and the split view's columns and zoom. */
+const config = (project) => ({
+  projectStart: plans[project][0].start,
+  dependencies: links[project],
+  split: {
+    editable: true, dateAxis: true, zoom: 'quarter', zoomControl: true, gridWidth: 540,
+    columns: ['wbs', 'name', 'start', 'end', 'progress'], arrows: true, criticalPath: true,
+  },
+});
 
 /** Project picker, plus the Gantt over the plan's task table. */
-export function ganttFragment(project = 'launch') {
+export function ganttFragment(project = 'platform') {
   const pick = Object.keys(plans)
     .map((p) => `<button hx-get="/htmx-demo/gantt/plan?project=${p}" hx-target="#gantt-view"
       hx-push-url="?project=${p}" aria-pressed="${p === project}">${names[p]}</button>`)
     .join('\n  ');
   const list = plans[project];
   // The anchors sit inside the Gantt element: an out-of-band row lands on one.
-  const anchors = list.map((t) => `<i id="task-${t.id}" data-lattice-row="${t.id}"></i>`).join('');
+  const anchors = list.map((t) => `<i id="${anchorId(t.id)}" data-lattice-row="${t.id}"></i>`).join('');
   const action = `<button class="action" hx-post="/htmx-demo/gantt/slip" hx-vals='{"project": "${project}"}' hx-swap="none">Server slips one task</button>`;
   return `<div class="view"><div class="filters">${pick}${action}</div>
 <div data-lattice-gantt hx-post="/htmx-demo/gantt/save" hx-trigger="lattice:gantt-change"
   hx-vals='js:{id: event.detail.id, kind: event.detail.kind, changes: JSON.stringify(event.detail.changes)}'
-  hx-target="#save-status" hx-swap="innerHTML" style="height:460px">
-  <table><thead><tr><th data-field="id">ID</th><th data-field="name">Task</th><th data-field="start">Start</th>
-    <th data-field="end">End</th><th data-field="percentComplete">Done %</th></tr></thead>
+  hx-target="#save-status" hx-swap="innerHTML" style="height:600px">
+  <table><thead><tr><th data-field="id">ID</th><th data-field="name">Task</th><th data-field="parent">Phase</th>
+    <th data-field="start">Start</th><th data-field="end">End</th><th data-field="percentComplete">Done %</th><th data-field="milestone">Milestone</th></tr></thead>
   <tbody>
   ${list.map((t) => taskRow(t)).join('\n  ')}
   </tbody></table>${anchors}
 </div>
-<script type="application/json" data-lattice-config>{"projectStart":"2026-10-05","split":{"editable":true,"dateAxis":true,"zoom":"week","zoomControl":true,"gridWidth":400}}</script></div>`;
+<script type="application/json" data-lattice-config>${JSON.stringify(config(project))}</script></div>`;
 }
 
 export const routes = {
   // hx-get: another project's plan; the old Gantt is torn down and a new one built.
-  'GET /htmx-demo/gantt/plan': ({ params }) => ganttFragment(params.project in plans ? params.project : 'launch'),
+  'GET /htmx-demo/gantt/plan': ({ params }) => ganttFragment(params.project in plans ? params.project : 'platform'),
 
   // hx-post from lattice:gantt-change: record the change and confirm it.
   'POST /htmx-demo/gantt/save': ({ params }) => {
@@ -72,12 +114,13 @@ export const routes = {
 
   // hx-post with hx-swap="none": one task comes back out of band and its bar moves.
   'POST /htmx-demo/gantt/slip': ({ params }) => {
-    const list = plans[params.project in plans ? params.project : 'launch'];
-    const task = list[1 + Math.floor(Math.random() * (list.length - 1))];
-    const day = (iso) => new Date(Date.parse(iso) + 864e5).toISOString().slice(0, 10);
+    const list = plans[params.project in plans ? params.project : 'platform'];
+    const open = list.filter((t) => t.parent && !t.milestone && t.percentComplete < 100);
+    const task = open[Math.floor(Math.random() * open.length)];
+    const day = (iso) => new Date(Date.parse(iso) + 7 * 864e5).toISOString().slice(0, 10);
     task.start = day(task.start);
     task.end = day(task.end);
-    return taskRow(task, `id="task-${task.id}" data-lattice-row="${task.id}" hx-swap-oob="true"`);
+    return taskRow(task, `id="${anchorId(task.id)}" data-lattice-row="${task.id}" hx-swap-oob="true"`);
   },
 };
 // SERVER TEMPLATE END

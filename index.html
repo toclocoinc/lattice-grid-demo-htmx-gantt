@@ -17,7 +17,7 @@
 <body>
 <header>
   <h1>htmx Gantt chart over a server task table</h1>
-  <p class="lede">The server renders a plain task table; Lattice turns it into a Gantt chart with no mount code, and htmx handles the swaps, the
+  <p class="lede">The server renders a plain task table for a two-year programme, with phases, milestones and linked tasks; Lattice turns it into a Gantt chart with no mount code, and htmx handles the swaps, the
   out-of-band update and the save. A stand-in server answers htmx's requests in your browser, so nothing leaves the page.</p>
   <p class="links"><a href="https://github.com/toclocoinc/lattice-grid-demo-htmx-gantt">Code on GitHub</a>
   <a href="https://www.latticegrid.dev/htmx/gantt/">Lattice Grid with htmx</a></p>
@@ -25,29 +25,43 @@
 <main class="showcase">
   <div class="demo">
     <div id="htmx-history" hx-history-elt>
-      <div id="gantt-view"><div class="view"><div class="filters"><button hx-get="/htmx-demo/gantt/plan?project=launch" hx-target="#gantt-view"
-      hx-push-url="?project=launch" aria-pressed="true">Product launch</button>
+      <div id="gantt-view"><div class="view"><div class="filters"><button hx-get="/htmx-demo/gantt/plan?project=platform" hx-target="#gantt-view"
+      hx-push-url="?project=platform" aria-pressed="true">Platform rebuild</button>
   <button hx-get="/htmx-demo/gantt/plan?project=migration" hx-target="#gantt-view"
-      hx-push-url="?project=migration" aria-pressed="false">Data migration</button><button class="action" hx-post="/htmx-demo/gantt/slip" hx-vals='{"project": "launch"}' hx-swap="none">Server slips one task</button></div>
+      hx-push-url="?project=migration" aria-pressed="false">Data centre migration</button><button class="action" hx-post="/htmx-demo/gantt/slip" hx-vals='{"project": "platform"}' hx-swap="none">Server slips one task</button></div>
 <div data-lattice-gantt hx-post="/htmx-demo/gantt/save" hx-trigger="lattice:gantt-change"
   hx-vals='js:{id: event.detail.id, kind: event.detail.kind, changes: JSON.stringify(event.detail.changes)}'
-  hx-target="#save-status" hx-swap="innerHTML" style="height:460px">
-  <table><thead><tr><th data-field="id">ID</th><th data-field="name">Task</th><th data-field="start">Start</th>
-    <th data-field="end">End</th><th data-field="percentComplete">Done %</th></tr></thead>
+  hx-target="#save-status" hx-swap="innerHTML" style="height:600px">
+  <table><thead><tr><th data-field="id">ID</th><th data-field="name">Task</th><th data-field="parent">Phase</th>
+    <th data-field="start">Start</th><th data-field="end">End</th><th data-field="percentComplete">Done %</th><th data-field="milestone">Milestone</th></tr></thead>
   <tbody>
-  <tr ><td>L1</td><td>Scope the launch</td><td>2026-10-05</td><td>2026-10-09</td><td>100</td></tr>
-  <tr ><td>L2</td><td>Agree pricing and packaging</td><td>2026-10-12</td><td>2026-10-23</td><td>80</td></tr>
-  <tr ><td>L3</td><td>Build the landing page</td><td>2026-10-19</td><td>2026-11-06</td><td>45</td></tr>
-  <tr ><td>L4</td><td>Write the announcement</td><td>2026-11-02</td><td>2026-11-13</td><td>20</td></tr>
-  <tr ><td>L5</td><td>Record the product video</td><td>2026-11-09</td><td>2026-11-27</td><td>0</td></tr>
-  <tr ><td>L6</td><td>Brief partners and press</td><td>2026-11-23</td><td>2026-12-04</td><td>0</td></tr>
-  <tr ><td>L7</td><td>Review with legal</td><td>2026-11-30</td><td>2026-12-11</td><td>0</td></tr>
-  <tr ><td>L8</td><td>Load-test the signup flow</td><td>2026-12-07</td><td>2026-12-18</td><td>0</td></tr>
-  <tr ><td>L9</td><td>Train the support team</td><td>2026-12-14</td><td>2026-12-23</td><td>0</td></tr>
-  <tr ><td>L10</td><td>Go live</td><td>2027-01-05</td><td>2027-01-06</td><td>0</td></tr>
-  </tbody></table><i id="task-L1" data-lattice-row="L1"></i><i id="task-L2" data-lattice-row="L2"></i><i id="task-L3" data-lattice-row="L3"></i><i id="task-L4" data-lattice-row="L4"></i><i id="task-L5" data-lattice-row="L5"></i><i id="task-L6" data-lattice-row="L6"></i><i id="task-L7" data-lattice-row="L7"></i><i id="task-L8" data-lattice-row="L8"></i><i id="task-L9" data-lattice-row="L9"></i><i id="task-L10" data-lattice-row="L10"></i>
+  <tr ><td>P1</td><td>Discovery</td><td></td><td>2026-04-06</td><td>2026-06-26</td><td>0</td><td>false</td></tr>
+  <tr ><td>P1.1</td><td>Stakeholder interviews</td><td>P1</td><td>2026-04-06</td><td>2026-04-24</td><td>100</td><td>false</td></tr>
+  <tr ><td>P1.2</td><td>Current system audit</td><td>P1</td><td>2026-04-20</td><td>2026-05-22</td><td>100</td><td>false</td></tr>
+  <tr ><td>P1.3</td><td>Requirements and roadmap</td><td>P1</td><td>2026-05-25</td><td>2026-06-19</td><td>100</td><td>false</td></tr>
+  <tr ><td>M1</td><td>Business case approved</td><td>P1</td><td>2026-06-26</td><td>2026-06-26</td><td>100</td><td>true</td></tr>
+  <tr ><td>P2</td><td>Architecture</td><td></td><td>2026-06-29</td><td>2026-10-30</td><td>0</td><td>false</td></tr>
+  <tr ><td>P2.1</td><td>Target architecture</td><td>P2</td><td>2026-06-29</td><td>2026-08-07</td><td>100</td><td>false</td></tr>
+  <tr ><td>P2.2</td><td>Data model and APIs</td><td>P2</td><td>2026-08-03</td><td>2026-09-25</td><td>90</td><td>false</td></tr>
+  <tr ><td>P2.3</td><td>Security review</td><td>P2</td><td>2026-09-21</td><td>2026-10-23</td><td>40</td><td>false</td></tr>
+  <tr ><td>M2</td><td>Architecture sign-off</td><td>P2</td><td>2026-10-30</td><td>2026-10-30</td><td>0</td><td>true</td></tr>
+  <tr ><td>P3</td><td>Build</td><td></td><td>2026-11-02</td><td>2027-09-24</td><td>0</td><td>false</td></tr>
+  <tr ><td>P3.1</td><td>Core services</td><td>P3</td><td>2026-11-02</td><td>2027-03-26</td><td>5</td><td>false</td></tr>
+  <tr ><td>P3.2</td><td>Customer portal</td><td>P3</td><td>2027-01-11</td><td>2027-06-25</td><td>0</td><td>false</td></tr>
+  <tr ><td>P3.3</td><td>Reporting and analytics</td><td>P3</td><td>2027-03-29</td><td>2027-07-30</td><td>0</td><td>false</td></tr>
+  <tr ><td>P3.4</td><td>Integrations</td><td>P3</td><td>2027-05-03</td><td>2027-09-10</td><td>0</td><td>false</td></tr>
+  <tr ><td>M3</td><td>Feature complete</td><td>P3</td><td>2027-09-24</td><td>2027-09-24</td><td>0</td><td>true</td></tr>
+  <tr ><td>P4</td><td>Test and pilot</td><td></td><td>2027-09-27</td><td>2028-01-28</td><td>0</td><td>false</td></tr>
+  <tr ><td>P4.1</td><td>System and load testing</td><td>P4</td><td>2027-09-27</td><td>2027-11-19</td><td>0</td><td>false</td></tr>
+  <tr ><td>P4.2</td><td>Pilot with two customers</td><td>P4</td><td>2027-11-22</td><td>2028-01-21</td><td>0</td><td>false</td></tr>
+  <tr ><td>M4</td><td>Go / no-go</td><td>P4</td><td>2028-01-28</td><td>2028-01-28</td><td>0</td><td>true</td></tr>
+  <tr ><td>P5</td><td>Rollout</td><td></td><td>2028-01-31</td><td>2028-03-31</td><td>0</td><td>false</td></tr>
+  <tr ><td>P5.1</td><td>Migrate customers in waves</td><td>P5</td><td>2028-01-31</td><td>2028-03-17</td><td>0</td><td>false</td></tr>
+  <tr ><td>P5.2</td><td>Retire the old platform</td><td>P5</td><td>2028-03-06</td><td>2028-03-31</td><td>0</td><td>false</td></tr>
+  <tr ><td>M5</td><td>Programme complete</td><td>P5</td><td>2028-03-31</td><td>2028-03-31</td><td>0</td><td>true</td></tr>
+  </tbody></table><i id="task-P1" data-lattice-row="P1"></i><i id="task-P1-1" data-lattice-row="P1.1"></i><i id="task-P1-2" data-lattice-row="P1.2"></i><i id="task-P1-3" data-lattice-row="P1.3"></i><i id="task-M1" data-lattice-row="M1"></i><i id="task-P2" data-lattice-row="P2"></i><i id="task-P2-1" data-lattice-row="P2.1"></i><i id="task-P2-2" data-lattice-row="P2.2"></i><i id="task-P2-3" data-lattice-row="P2.3"></i><i id="task-M2" data-lattice-row="M2"></i><i id="task-P3" data-lattice-row="P3"></i><i id="task-P3-1" data-lattice-row="P3.1"></i><i id="task-P3-2" data-lattice-row="P3.2"></i><i id="task-P3-3" data-lattice-row="P3.3"></i><i id="task-P3-4" data-lattice-row="P3.4"></i><i id="task-M3" data-lattice-row="M3"></i><i id="task-P4" data-lattice-row="P4"></i><i id="task-P4-1" data-lattice-row="P4.1"></i><i id="task-P4-2" data-lattice-row="P4.2"></i><i id="task-M4" data-lattice-row="M4"></i><i id="task-P5" data-lattice-row="P5"></i><i id="task-P5-1" data-lattice-row="P5.1"></i><i id="task-P5-2" data-lattice-row="P5.2"></i><i id="task-M5" data-lattice-row="M5"></i>
 </div>
-<script type="application/json" data-lattice-config>{"projectStart":"2026-10-05","split":{"editable":true,"dateAxis":true,"zoom":"week","zoomControl":true,"gridWidth":400}}</script></div></div>
+<script type="application/json" data-lattice-config>{"projectStart":"2026-04-06","dependencies":[{"from":"P1.1","to":"P1.3"},{"from":"P1.2","to":"P1.3"},{"from":"P1.3","to":"M1"},{"from":"M1","to":"P2.1"},{"from":"P2.1","to":"P2.2"},{"from":"P2.2","to":"P2.3"},{"from":"P2.3","to":"M2"},{"from":"M2","to":"P3.1"},{"from":"P3.1","to":"P3.3"},{"from":"P3.2","to":"M3"},{"from":"P3.3","to":"M3"},{"from":"P3.4","to":"M3"},{"from":"M3","to":"P4.1"},{"from":"P4.1","to":"P4.2"},{"from":"P4.2","to":"M4"},{"from":"M4","to":"P5.1"},{"from":"P5.1","to":"M5"},{"from":"P5.2","to":"M5"}],"split":{"editable":true,"dateAxis":true,"zoom":"quarter","zoomControl":true,"gridWidth":540,"columns":["wbs","name","start","end","progress"],"arrows":true,"criticalPath":true}}</script></div></div>
       <p id="save-status" class="status" aria-live="polite"></p>
     </div>
   </div>
@@ -56,7 +70,7 @@
     <ol class="steps">
       <li><strong>Built on load.</strong> The task table was server-rendered; the Gantt replaced it with a task grid and a timeline.</li>
       <li><strong>Swap.</strong> Pick the other project. hx-get fetches its tasks, the old Gantt is torn down and a new one is built.</li>
-      <li><strong>Out of band.</strong> Press "Server slips one task". One task comes back out of band and its bar moves a day.</li>
+      <li><strong>Out of band.</strong> Press "Server slips one task". One unfinished task comes back out of band and its bar moves a week.</li>
       <li><strong>Edit.</strong> Drag a bar to new dates, or edit a cell. lattice:gantt-change is posted with hx-post and the server confirms below the chart.</li>
       <li><strong>Back.</strong> Click Month in the timeline header, switch project, then press Back. The zoom returns to Month.</li>
     </ol>
