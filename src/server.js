@@ -71,7 +71,7 @@ const config = (project) => ({
   projectStart: plans[project][0].start,
   dependencies: links[project],
   split: {
-    editable: true, dateAxis: true, height: null, zoom: 'month', zoomControl: true, gridWidth: 540,
+    editable: true, dateAxis: true, height: null, zoom: 'month', zoomControl: { levels: ['week', 'month', 'quarter', 'fit'] }, gridWidth: 540,
     columns: ['wbs', 'name', 'start', 'end', 'progress'], arrows: true, criticalPath: true,
   },
 });
@@ -87,9 +87,9 @@ export function ganttFragment(project = 'platform') {
   const anchors = list.map((t) => `<i id="${anchorId(t.id)}" data-lattice-row="${t.id}"></i>`).join('');
   const action = `<button class="action" hx-post="/htmx-demo/gantt/slip" hx-vals='{"project": "${project}"}' hx-swap="none">Server slips one task</button>`;
   return `<div class="view"><div class="filters">${pick}${action}</div>
-<div data-lattice-gantt hx-post="/htmx-demo/gantt/save" hx-trigger="lattice:gantt-change"
-  hx-vals='js:{id: event.detail.id, kind: event.detail.kind, changes: JSON.stringify(event.detail.changes)}'
-  hx-target="#save-status" hx-swap="innerHTML">
+<div data-lattice-gantt hx-post="/htmx-demo/gantt/save" hx-trigger="lattice:gantt-change[detail.task.parent!=null]"
+  hx-vals='js:{id: event?.detail?.id, kind: event?.detail?.kind, changes: JSON.stringify(event?.detail?.changes ?? {})}'
+  hx-target="#save-log" hx-swap="afterbegin" hx-sync="this:drop">
   <table><thead><tr><th data-field="id">ID</th><th data-field="name">Task</th><th data-field="parent">Phase</th>
     <th data-field="start">Start</th><th data-field="end">End</th><th data-field="percentComplete">Done %</th><th data-field="milestone">Milestone</th></tr></thead>
   <tbody>
@@ -106,10 +106,10 @@ export const routes = {
   // hx-post from lattice:gantt-change: record the change and confirm it.
   'POST /htmx-demo/gantt/save': ({ params }) => {
     const task = Object.values(plans).flat().find((t) => t.id === params.id);
-    if (!task) return { html: 'Unknown task', status: 404 };
+    if (!task) return { html: '', status: 204 };
     const changes = JSON.parse(params.changes);
     for (const [field, v] of Object.entries(changes)) task[field] = v?.to ?? v;
-    return `Server saved ${esc(task.name)} (${esc(params.kind)}): ${esc(task.start)} to ${esc(task.end)}`;
+    return `<li>Saved <strong>${esc(task.name)}</strong>: ${esc(task.start)} to ${esc(task.end)}</li>`;
   },
 
   // hx-post with hx-swap="none": one task comes back out of band and its bar moves.

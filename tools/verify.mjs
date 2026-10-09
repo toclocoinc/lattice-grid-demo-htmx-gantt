@@ -21,16 +21,16 @@ try {
   await page.waitForFunction(() => document.querySelectorAll('#gantt-view [role=row]').length > 3, { timeout: 30000 });
   await sleep(1000);
   const first = await page.evaluate(rows);
-  check(first.includes('Scope the launch'), 'built on load from the server task table');
+  check(first.includes('Stakeholder interviews'), 'built on load from the server task table');
   await page.click('button[hx-post="/htmx-demo/gantt/slip"]');
   await sleep(1200);
   check(await page.evaluate(rows) !== first, 'out of band: one task moved');
   await page.click('button[hx-get*="project=migration"]');
   await sleep(1500);
-  check((await page.evaluate(rows)).includes('Audit the old system'), 'swap: the other project is built');
+  check((await page.evaluate(rows)).includes('Inventory servers and apps'), 'swap: the other project is built');
   await page.goBack();
   await sleep(2000);
-  check((await page.evaluate(rows)).includes('Scope the launch'), 'Back: the first project returns');
+  check((await page.evaluate(rows)).includes('Stakeholder interviews'), 'Back: the first project returns');
   check(errors.length === 0, `no console errors ${errors.join(' / ')}`);
 } finally {
   await browser.close();
