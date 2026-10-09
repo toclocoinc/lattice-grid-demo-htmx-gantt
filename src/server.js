@@ -4,17 +4,26 @@
  */
 const plans = {
   launch: [
-    { id: 'L1', name: 'Scope the launch', start: '2026-10-05', end: '2026-10-08', percentComplete: 100 },
-    { id: 'L2', name: 'Build the landing page', start: '2026-10-09', end: '2026-10-16', percentComplete: 60 },
-    { id: 'L3', name: 'Write the announcement', start: '2026-10-12', end: '2026-10-15', percentComplete: 30 },
-    { id: 'L4', name: 'Review with legal', start: '2026-10-19', end: '2026-10-21', percentComplete: 0 },
-    { id: 'L5', name: 'Go live', start: '2026-10-22', end: '2026-10-23', percentComplete: 0 },
+    { id: 'L1', name: 'Scope the launch', start: '2026-10-05', end: '2026-10-09', percentComplete: 100 },
+    { id: 'L2', name: 'Agree pricing and packaging', start: '2026-10-12', end: '2026-10-23', percentComplete: 80 },
+    { id: 'L3', name: 'Build the landing page', start: '2026-10-19', end: '2026-11-06', percentComplete: 45 },
+    { id: 'L4', name: 'Write the announcement', start: '2026-11-02', end: '2026-11-13', percentComplete: 20 },
+    { id: 'L5', name: 'Record the product video', start: '2026-11-09', end: '2026-11-27', percentComplete: 0 },
+    { id: 'L6', name: 'Brief partners and press', start: '2026-11-23', end: '2026-12-04', percentComplete: 0 },
+    { id: 'L7', name: 'Review with legal', start: '2026-11-30', end: '2026-12-11', percentComplete: 0 },
+    { id: 'L8', name: 'Load-test the signup flow', start: '2026-12-07', end: '2026-12-18', percentComplete: 0 },
+    { id: 'L9', name: 'Train the support team', start: '2026-12-14', end: '2026-12-23', percentComplete: 0 },
+    { id: 'L10', name: 'Go live', start: '2027-01-05', end: '2027-01-06', percentComplete: 0 },
   ],
   migration: [
-    { id: 'M1', name: 'Audit the old system', start: '2026-10-05', end: '2026-10-09', percentComplete: 100 },
-    { id: 'M2', name: 'Map the data', start: '2026-10-12', end: '2026-10-16', percentComplete: 40 },
-    { id: 'M3', name: 'Dry-run the import', start: '2026-10-19', end: '2026-10-23', percentComplete: 0 },
-    { id: 'M4', name: 'Cut over', start: '2026-10-26', end: '2026-10-28', percentComplete: 0 },
+    { id: 'M1', name: 'Audit the old system', start: '2026-10-05', end: '2026-10-16', percentComplete: 100 },
+    { id: 'M2', name: 'Map the data', start: '2026-10-19', end: '2026-11-06', percentComplete: 40 },
+    { id: 'M3', name: 'Build the import scripts', start: '2026-11-02', end: '2026-11-27', percentComplete: 10 },
+    { id: 'M4', name: 'Dry-run the import', start: '2026-11-30', end: '2026-12-11', percentComplete: 0 },
+    { id: 'M5', name: 'Fix what the dry run finds', start: '2026-12-07', end: '2026-12-18', percentComplete: 0 },
+    { id: 'M6', name: 'Freeze the old system', start: '2027-01-04', end: '2027-01-06', percentComplete: 0 },
+    { id: 'M7', name: 'Cut over', start: '2027-01-07', end: '2027-01-08', percentComplete: 0 },
+    { id: 'M8', name: 'Decommission the old system', start: '2027-01-11', end: '2027-01-29', percentComplete: 0 },
   ],
 };
 
