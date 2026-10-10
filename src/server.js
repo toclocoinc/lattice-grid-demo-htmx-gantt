@@ -77,10 +77,10 @@ const config = (project) => ({
 });
 
 /** Project picker, plus the Gantt over the plan's task table. */
-export function ganttFragment(project = 'platform') {
+export function ganttFragment(project = 'platform', page = (typeof location !== 'undefined' ? location.pathname : '/lattice-grid-demo-htmx-gantt/')) {
   const pick = Object.keys(plans)
     .map((p) => `<button hx-get="/htmx-demo/gantt/plan?project=${p}" hx-target="#gantt-view"
-      hx-push-url="?project=${p}" aria-pressed="${p === project}">${names[p]}</button>`)
+      hx-push-url="${page}?project=${p}" aria-pressed="${p === project}">${names[p]}</button>`)
     .join('\n  ');
   const list = plans[project];
   // The anchors sit inside the Gantt element: an out-of-band row lands on one.

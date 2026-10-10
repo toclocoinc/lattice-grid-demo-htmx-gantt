@@ -26,9 +26,9 @@
   <div class="demo">
     <div id="htmx-history" hx-history-elt>
       <div id="gantt-view"><div class="view"><div class="filters"><button hx-get="/htmx-demo/gantt/plan?project=platform" hx-target="#gantt-view"
-      hx-push-url="?project=platform" aria-pressed="true">Platform rebuild</button>
+      hx-push-url="/lattice-grid-demo-htmx-gantt/?project=platform" aria-pressed="true">Platform rebuild</button>
   <button hx-get="/htmx-demo/gantt/plan?project=migration" hx-target="#gantt-view"
-      hx-push-url="?project=migration" aria-pressed="false">Data centre migration</button><button class="action" hx-post="/htmx-demo/gantt/slip" hx-vals='{"project": "platform"}' hx-swap="none">Server slips one task</button></div>
+      hx-push-url="/lattice-grid-demo-htmx-gantt/?project=migration" aria-pressed="false">Data centre migration</button><button class="action" hx-post="/htmx-demo/gantt/slip" hx-vals='{"project": "platform"}' hx-swap="none">Server slips one task</button></div>
 <div data-lattice-gantt style="height:calc(100vh - 260px); min-height:480px" hx-post="/htmx-demo/gantt/save" hx-trigger="lattice:gantt-commit"
   hx-vals='js:{changes: JSON.stringify(event.detail.changes), primary: event.detail.primary.id}'
   hx-target="#save-log" hx-swap="afterbegin">
