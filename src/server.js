@@ -68,7 +68,6 @@ const taskRow = (t, attrs = '') =>
 
 /** The Gantt's options: the plan's links and the split view's columns and zoom. */
 const config = (project) => ({
-  projectStart: plans[project][0].start,
   dependencies: links[project],
   split: {
     editable: true, dateAxis: true, zoom: 'month', zoomControl: { levels: ['week', 'month', 'quarter', 'fit'] }, gridWidth: 540,

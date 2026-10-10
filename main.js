@@ -2,10 +2,10 @@
 // and the Lattice htmx module next so their listeners are registered, and htmx
 // itself last. htmx then processes the page and fires htmx:load for the
 // server-rendered table, which is what builds the Gantt. No mount call anywhere.
-import { installMockServer } from './src/mock-server.js';
-import { routes } from './src/server.js';
+import { installMockServer } from './src/mock-server.js?v=20261010a';
+import { routes } from './src/server.js?v=20261010a';
 
-const GRID = 'https://cdn.jsdelivr.net/npm/@toclocoinc/lattice-grid@1.96.0';
+const GRID = 'https://cdn.jsdelivr.net/npm/@toclocoinc/lattice-grid@1.98.0';
 const HTMX = 'https://cdn.jsdelivr.net/npm/htmx.org@2.0.4/dist/htmx.min.js';
 const HTMX_SRI = 'sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+';
 // Public, domain-bound key for toclocoinc.github.io; on localhost no key is needed.
@@ -21,6 +21,10 @@ const loadScript = (src, attrs = {}) => new Promise((resolve, reject) => {
 });
 
 installMockServer(routes);
+// The server-rendered picker carries the full page path in hx-push-url so Back works under any base path.
+for (const b of document.querySelectorAll('[hx-push-url]')) {
+  b.setAttribute('hx-push-url', location.pathname + b.getAttribute('hx-push-url').slice(b.getAttribute('hx-push-url').indexOf('?')));
+}
 await loadScript(GRID + '/modules/gantt.min.js');
 const lattice = await import('@toclocoinc/lattice-grid/modules/htmx');
 lattice.setLicence(LICENCE);

@@ -6,12 +6,12 @@
 <title>htmx Gantt Chart over a Server Task Table | Lattice Grid</title>
 <meta name="description" content="An htmx Gantt chart built from a server-rendered task table: swap projects with hx-get, move one task out of band, post bar drags with hx-post, and keep the zoom on Back.">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@toclocoinc/lattice-grid@1.96.0/lattice-grid.min.css">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@toclocoinc/lattice-grid@1.98.0/lattice-grid.min.css">
+<link rel="stylesheet" href="styles.css?v=20261010a">
 <!-- The grid comes from the published package. To use a newer release, change the version in these lines. -->
 <script type="importmap">
 { "imports": {
-  "@toclocoinc/lattice-grid/modules/htmx": "https://cdn.jsdelivr.net/npm/@toclocoinc/lattice-grid@1.96.0/modules/htmx.esm.min.js" } }
+  "@toclocoinc/lattice-grid/modules/htmx": "https://cdn.jsdelivr.net/npm/@toclocoinc/lattice-grid@1.98.0/modules/htmx.esm.min.js" } }
 </script>
 </head>
 <body>
@@ -61,7 +61,7 @@
   <tr ><td>M5</td><td>Programme complete</td><td>P5</td><td>2028-03-31</td><td>2028-03-31</td><td>0</td><td>true</td></tr>
   </tbody></table><i id="task-P1" data-lattice-row="P1"></i><i id="task-P1-1" data-lattice-row="P1.1"></i><i id="task-P1-2" data-lattice-row="P1.2"></i><i id="task-P1-3" data-lattice-row="P1.3"></i><i id="task-M1" data-lattice-row="M1"></i><i id="task-P2" data-lattice-row="P2"></i><i id="task-P2-1" data-lattice-row="P2.1"></i><i id="task-P2-2" data-lattice-row="P2.2"></i><i id="task-P2-3" data-lattice-row="P2.3"></i><i id="task-M2" data-lattice-row="M2"></i><i id="task-P3" data-lattice-row="P3"></i><i id="task-P3-1" data-lattice-row="P3.1"></i><i id="task-P3-2" data-lattice-row="P3.2"></i><i id="task-P3-3" data-lattice-row="P3.3"></i><i id="task-P3-4" data-lattice-row="P3.4"></i><i id="task-M3" data-lattice-row="M3"></i><i id="task-P4" data-lattice-row="P4"></i><i id="task-P4-1" data-lattice-row="P4.1"></i><i id="task-P4-2" data-lattice-row="P4.2"></i><i id="task-M4" data-lattice-row="M4"></i><i id="task-P5" data-lattice-row="P5"></i><i id="task-P5-1" data-lattice-row="P5.1"></i><i id="task-P5-2" data-lattice-row="P5.2"></i><i id="task-M5" data-lattice-row="M5"></i>
 </div>
-<script type="application/json" data-lattice-config>{"projectStart":"2026-04-06","dependencies":[{"from":"P1.1","to":"P1.3"},{"from":"P1.2","to":"P1.3"},{"from":"P1.3","to":"M1"},{"from":"M1","to":"P2.1"},{"from":"P2.1","to":"P2.2"},{"from":"P2.2","to":"P2.3"},{"from":"P2.3","to":"M2"},{"from":"M2","to":"P3.1"},{"from":"P3.1","to":"P3.3"},{"from":"P3.2","to":"M3"},{"from":"P3.3","to":"M3"},{"from":"P3.4","to":"M3"},{"from":"M3","to":"P4.1"},{"from":"P4.1","to":"P4.2"},{"from":"P4.2","to":"M4"},{"from":"M4","to":"P5.1"},{"from":"P5.1","to":"M5"},{"from":"P5.2","to":"M5"}],"split":{"editable":true,"dateAxis":true,"zoom":"month","zoomControl":{"levels":["week","month","quarter","fit"]},"gridWidth":540,"columns":["wbs","name","start","end","progress"],"arrows":true,"criticalPath":true}}</script></div></div>
+<script type="application/json" data-lattice-config>{"dependencies":[{"from":"P1.1","to":"P1.3"},{"from":"P1.2","to":"P1.3"},{"from":"P1.3","to":"M1"},{"from":"M1","to":"P2.1"},{"from":"P2.1","to":"P2.2"},{"from":"P2.2","to":"P2.3"},{"from":"P2.3","to":"M2"},{"from":"M2","to":"P3.1"},{"from":"P3.1","to":"P3.3"},{"from":"P3.2","to":"M3"},{"from":"P3.3","to":"M3"},{"from":"P3.4","to":"M3"},{"from":"M3","to":"P4.1"},{"from":"P4.1","to":"P4.2"},{"from":"P4.2","to":"M4"},{"from":"M4","to":"P5.1"},{"from":"P5.1","to":"M5"},{"from":"P5.2","to":"M5"}],"split":{"editable":true,"dateAxis":true,"zoom":"month","zoomControl":{"levels":["week","month","quarter","fit"]},"gridWidth":540,"columns":["wbs","name","start","end","progress"],"arrows":true,"criticalPath":true}}</script></div></div>
       <h3 class="saved-head">Saved by the server</h3>
       <ul id="save-log" class="saved" aria-live="polite"></ul>
     </div>
@@ -80,6 +80,6 @@
   </aside>
 </main>
 <footer>Built with <a href="https://www.latticegrid.dev/htmx/gantt/">Lattice Grid</a>. No keys, no analytics.</footer>
-<script type="module" src="main.js"></script>
+<script type="module" src="main.js?v=20261010a"></script>
 </body>
 </html>
