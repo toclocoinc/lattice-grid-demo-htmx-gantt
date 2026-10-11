@@ -75,6 +75,9 @@ const config = (project) => ({
   },
 });
 
+/** The project a query value names; anything unknown gets the first plan. */
+export const projectFor = (name) => (Object.hasOwn(plans, name) ? name : 'platform');
+
 /** Project picker, plus the Gantt over the plan's task table. */
 export function ganttFragment(project = 'platform', page = (typeof location !== 'undefined' ? location.pathname : '/lattice-grid-demo-htmx-gantt/')) {
   const pick = Object.keys(plans)
@@ -100,7 +103,7 @@ export function ganttFragment(project = 'platform', page = (typeof location !== 
 
 export const routes = {
   // hx-get: another project's plan; the old Gantt is torn down and a new one built.
-  'GET /htmx-demo/gantt/plan': ({ params }) => ganttFragment(params.project in plans ? params.project : 'platform'),
+  'GET /htmx-demo/gantt/plan': ({ params }) => ganttFragment(projectFor(params.project)),
 
   // hx-post from lattice:gantt-change: record the change and confirm it.
   'POST /htmx-demo/gantt/save': ({ params }) => {
