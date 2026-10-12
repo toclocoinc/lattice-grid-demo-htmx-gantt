@@ -2,10 +2,10 @@
 // and the Lattice htmx module next so their listeners are registered, and htmx
 // itself last. htmx then processes the page and fires htmx:load for the
 // server-rendered table, which is what builds the Gantt. No mount call anywhere.
-import { installMockServer } from './src/mock-server.js?v=20261011a';
-import { routes, ganttFragment, projectFor } from './src/server.js?v=20261011a';
+import { installMockServer } from './src/mock-server.js?v=20261012a';
+import { routes, ganttFragment, projectFor } from './src/server.js?v=20261012a';
 
-const GRID = 'https://cdn.jsdelivr.net/npm/@toclocoinc/lattice-grid@1.98.3';
+const GRID = 'https://cdn.jsdelivr.net/npm/@toclocoinc/lattice-grid@1.99.0';
 const HTMX = 'https://cdn.jsdelivr.net/npm/htmx.org@2.0.4/dist/htmx.min.js';
 const HTMX_SRI = 'sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+';
 // Public, domain-bound key for toclocoinc.github.io; on localhost no key is needed.
